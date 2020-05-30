@@ -1,15 +1,31 @@
-// 解法一 1ms
-private List<Integer> list = new LinkedList<Integer>();
+// 递归
+List<Integer> list = new ArrayList<>();
 
 public List<Integer> preorderTraversal(TreeNode root) {
-    pre(root);
+    if (root == null) return list;
+    list.add(root.val);
+    preorderTraversal(root.left);
+    preorderTraversal(root.right);
     return list;
 }
 
-public void pre(TreeNode root){
-    if(root != null){
-        list.add(root.val);
-        preorderTraversal(root.left);
-        preorderTraversal(root.right);
+// 迭代
+public List<Integer> preorderTraversal(TreeNode root) {
+    LinkedList<TreeNode> stack = new LinkedList<>();
+    LinkedList<Integer> output = new LinkedList<>();
+    if (root == null) {
+        return output;
     }
+    stack.add(root);
+    while (!stack.isEmpty()) {
+        TreeNode node = stack.pollLast();
+        output.add(node.val);
+        if (node.right != null) {
+            stack.add(node.right);
+        }
+        if (node.left != null) {
+            stack.add(node.left);
+        }
+    }
+    return output;
 }
